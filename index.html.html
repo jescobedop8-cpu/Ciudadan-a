@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapeo Constitucional | Ciudadanía para el Siglo XXI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F7F4EC] text-[#4A5568] min-h-screen py-8 px-4 sm:px-6 flex flex-col justify-between">
+
+    <div class="max-w-5xl mx-auto w-full">
+        <!-- Encabezado -->
+        <header class="text-center mb-8">
+            <span class="bg-[#9B2335]/10 text-[#9B2335] text-xs font-bold uppercase tracking-wider py-1.5 px-4 rounded-full">Curso: Ciudadanía para el Siglo XXI</span>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-[#14213D] mt-3">Mapa Interactivo de la Constitución Política del Perú</h1>
+            <p class="text-sm sm:text-base text-[#4A5568] mt-2 max-w-2xl mx-auto">
+                Explora de manera dinámica los títulos constitucionales, su impacto en la realidad nacional y casos reales de defensa ciudadana.
+            </p>
+            <!-- Autores -->
+            <div class="mt-4 inline-flex items-center gap-2 bg-white px-4 py-1.5 rounded-full shadow-xs border border-stone-200 text-xs font-semibold text-[#14213D]">
+                <span>Integrantes:</span>
+                <span class="text-[#9B2335]">Jennifer Escobedo Pinco</span> &amp; <span class="text-[#9B2335]">Carlos Vargas Sinarahua</span>
+            </div>
+        </header>
+
+        <!-- Contenedor Principal Interactivo -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Menú de Módulos (Botones) -->
+            <div class="lg:col-span-1 flex flex-col space-y-2.5" id="module-buttons">
+                <button onclick="showModule(0)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-[#14213D] text-white flex items-center justify-between">
+                    <span class="text-sm">01. Persona y Sociedad</span>
+                    <span class="text-xs bg-white/20 px-2 py-0.5 rounded font-bold">Ver</span>
+                </button>
+                <button onclick="showModule(1)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between">
+                    <span class="text-sm">02. Estado y Nación</span>
+                    <span class="text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold">Ver</span>
+                </button>
+                <button onclick="showModule(2)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between">
+                    <span class="text-sm">03. Régimen Económico</span>
+                    <span class="text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold">Ver</span>
+                </button>
+                <button onclick="showModule(3)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between">
+                    <span class="text-sm">04. Estructura del Estado</span>
+                    <span class="text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold">Ver</span>
+                </button>
+                <button onclick="showModule(4)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between">
+                    <span class="text-sm">05. Garantías Constitucionales</span>
+                    <span class="text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold">Ver</span>
+                </button>
+                <button onclick="showModule(5)" class="module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between">
+                    <span class="text-sm">06. Reforma Constitucional</span>
+                    <span class="text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold">Ver</span>
+                </button>
+            </div>
+
+            <!-- Panel de Contenido Dinámico Visible Directamente -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-md p-6 sm:p-8 flex flex-col justify-between border border-stone-200">
+                <div id="content-display" class="space-y-4">
+                    <!-- Contenido inyectado por JS -->
+                </div>
+
+                <!-- Footer del Panel (Fuente y Eje) -->
+                <div class="mt-6 pt-4 border-t border-stone-100 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs gap-2">
+                    <span id="module-source" class="text-stone-500 font-medium">Constitución Política del Perú actual (<strong class="text-stone-700">Título I</strong>)</span>
+                    <span id="module-tag" class="bg-[#9B2335]/10 text-[#9B2335] font-semibold px-3 py-1 rounded-full">Derechos Humanos y Ética</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="text-center mt-12 text-xs text-stone-500">
+        <p>Herramienta académica interactiva · Ciudadanía para el Siglo XXI</p>
+        <p class="mt-4 max-w-3xl mx-auto text-left sm:text-center leading-relaxed border-t border-stone-300 pt-4">
+            <strong class="text-[#14213D]">Fuente:</strong>
+            Congreso de la República del Perú. (1993). <em>Constitución Política del Perú</em> [Texto vigente con sus reformas]. Lima, Perú.
+        </p>
+    </footer>
+
+    <!-- Script de Datos Integrados -->
+    <script>
+        const modules = [
+            {
+                title: "TÍTULO I · De la Persona y de la Sociedad",
+                sourcePart: "Título I",
+                concept: "Establece que el ser humano y su dignidad son el centro y fin supremo de todo el sistema legal y político del país.",
+                reflection: "<strong>Realidad Nacional:</strong> Permite frenar abusos de autoridad y discriminación. <em>Ejemplo:</em> Defiende a ciudadanos frente a despidos arbitrarios o tratos desiguales en servicios de salud públicos.",
+                tag: "Derechos Humanos y Ética Ciudadana",
+                items: [
+                    {
+                        name: "Art. 1 y 2: Dignidad y Derechos Fundamentales",
+                        desc: "Protege la vida, la igualdad ante la ley, la libertad individual y el libre desarrollo.",
+                        example: "Garantizar que una persona no sea discriminada por su origen al postular a un empleo.",
+                        img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Arts. 4 al 29: Derechos Sociales y Económicos",
+                        desc: "Garantizan la protección de la familia, la salud universal, la educación básica y los derechos laborales.",
+                        example: "Exigir atención médica oportuna y gratuidad escolar en escuelas públicas.",
+                        img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Arts. 30 al 38: Ciudadanía y Participación",
+                        desc: "Regulan el derecho al sufragio, la participación política y los deberes de civismo.",
+                        example: "Votar en elecciones presidenciales o participar activamente en cabildos y referéndums.",
+                        img: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                title: "TÍTULO II · Del Estado y la Nación",
+                sourcePart: "Título II",
+                concept: "Define la forma, organización soberana, el régimen democrático y los principios rectores de la República del Perú.",
+                reflection: "<strong>Realidad Nacional:</strong> Garantiza la soberanía territorial y el respeto a la pluralidad cultural del país. <em>Ejemplo:</em> Obliga al Estado a brindar servicios públicos y justicia traduciendo normas a lenguas originarias como el quechua o aimara.",
+                tag: "Democracia y Soberanía Popular",
+                items: [
+                    {
+                        name: "Art. 43 y 44: Forma de Gobierno y Deberes del Estado",
+                        desc: "Establece que el gobierno es unitario, descentralizado y obliga a garantizar la seguridad y el bienestar general.",
+                        example: "Intervención del Estado asistiendo con ayuda humanitaria a poblaciones vulnerables afectadas por heladas o huaicos.",
+                        img: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Art. 48: Idiomas Oficiales",
+                        desc: "Reconoce el castellano y, en zonas donde predominen, el quechua, el aimara y las demás lenguas aborígenes.",
+                        example: "Emisión de campañas de salud pública y documentos judiciales en regiones altoandinas en su lengua materna.",
+                        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Arts. 55 al 57: Tratados Internacionales",
+                        desc: "Incorpora los convenios internacionales de derechos humanos al ordenamiento jurídico nacional.",
+                        example: "Aplicación de sentencias de la Corte Interamericana de Derechos Humanos (Corte IDH) en tribunales peruanos.",
+                        img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                title: "TÍTULO III · Del Régimen Económico",
+                sourcePart: "Título III",
+                concept: "Organiza las reglas de juego de la economía nacional bajo el modelo de una economía social de mercado.",
+                reflection: "<strong>Realidad Nacional:</strong> Fomenta la inversión privada y el libre mercado evitando monopolios que perjudiquen al consumidor. <em>Ejemplo:</em> Sanciones a empresas coludidas en precios de productos básicos de primera necesidad.",
+                tag: "Convivencia, Equidad y Sostenibilidad",
+                items: [
+                    {
+                        name: "Art. 58 y 59: Economía Social de Mercado y Libre Empresa",
+                        desc: "Garantiza la iniciativa privada libre regulada bajo la moral, la salud y la seguridad pública.",
+                        example: "Un ciudadano abriendo un negocio formal y accediendo a créditos en el sistema financiero.",
+                        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Art. 60 y 61: Libre Competencia y Rol Subsidiario",
+                        desc: "Prohíbe los monopolios y promueve la competencia justa entre empresas en beneficio de los ciudadanos.",
+                        example: "Intervención de Indecopi regulando fusiones empresariales abusivas en el mercado farmacéutico o de consumo.",
+                        img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Arts. 66 y 67: Recursos Naturales y Ambiente",
+                        desc: "Establece que los recursos naturales son patrimonio de la Nación y promueve el desarrollo sostenible.",
+                        example: "Exigir estudios de impacto ambiental rigurosos previos a la ejecución de proyectos mineros o industriales.",
+                        img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                title: "TÍTULO IV · De la Estructura del Estado",
+                sourcePart: "Título IV",
+                concept: "Distribuye el poder público en diferentes instituciones independientes para garantizar el equilibrio y control democrático.",
+                reflection: "<strong>Realidad Nacional:</strong> Evita la concentración absoluta del poder y permite la fiscalización de la gestión pública. <em>Ejemplo:</em> Acciones de control político del Congreso y fiscalización anticorrupción del Ministerio Público.",
+                tag: "Democracia y Control del Poder",
+                items: [
+                    {
+                        name: "Poder Legislativo y Ejecutivo",
+                        desc: "El Congreso legisla y fiscaliza; el Ejecutivo diseña políticas públicas y administra los servicios del Estado.",
+                        example: "Aprobación de presupuestos públicos anuales para la construcción de hospitales y colegios regionales.",
+                        img: "https://images.unsplash.com/photo-1555848962-6e79363ec58f?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Poder Judicial",
+                        desc: "Administra justicia con autonomía, independencia y estricta observancia del debido proceso.",
+                        example: "Emisión de sentencias imparciales en litigios civiles, penales o laborales entre particulares y empresas.",
+                        img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Organismos Autónomos (Defensoría, JNE, ONPE, Ministerio Público)",
+                        desc: "Garantizan procesos electorales limpios, defensa de derechos ciudadanos y persecución del delito.",
+                        example: "Organización transparente de elecciones generales y fiscalización de la legalidad de los comicios.",
+                        img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                title: "TÍTULO V · De las Garantías Constitucionales",
+                sourcePart: "Título V",
+                concept: "Constituye la 'caja de herramientas' legal directa con la que cuenta todo ciudadano para frenar abusos y defender sus derechos.",
+                reflection: "<strong>Realidad Nacional:</strong> Empodera al ciudadano de a pie para exigir tutela judicial inmediata frente a vulneraciones graves. <em>Ejemplo:</em> Liberar mediante Hábeas Corpus a una persona detenida arbitrariamente por la policía.",
+                tag: "Derechos Humanos y Estado de Derecho",
+                items: [
+                    {
+                        name: "Hábeas Corpus",
+                        desc: "Protege la libertad individual y los derechos constitucionales conexos frente a detenciones arbitrarias.",
+                        example: "Acción interpuesta para liberar de inmediato a un ciudadano intervenido sin mandato judicial justificado.",
+                        img: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Acción de Amparo",
+                        desc: "Protege los demás derechos fundamentales (salud, trabajo, libre expresión) ante amenazas o violaciones.",
+                        example: "Exigir a una institución de salud la cobertura de un tratamiento médico urgente que se niega injustamente.",
+                        img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        name: "Hábeas Data",
+                        desc: "Garantiza el acceso a la información pública en poder del Estado y protege datos personales.",
+                        example: "Solicitar a un ministerio información transparente sobre gastos de contrataciones públicas.",
+                        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            },
+            {
+                title: "TÍTULO VI · De la Reforma de la Constitución",
+                sourcePart: "Título VI",
+                concept: "Establece los candados legales y procedimientos democráticos necesarios para modificar la Carta Magna garantizando consensos.",
+                reflection: "<strong>Realidad Nacional:</strong> Evita cambios autoritarios o improvisados en las reglas institucionales del país. <em>Ejemplo:</em> Someter reformas constitucionales estructurales a votación calificada en el Congreso o referéndum.",
+                tag: "Soberanía Popular y Deliberación",
+                items: [
+                    {
+                        name: "Art. 206: Procedimiento de Reforma Constitucional",
+                        desc: "Exige aprobación por mayoría absoluta en el Congreso y ratificación ciudadana mediante referéndum o dos legislaturas calificadas.",
+                        example: "Debates nacionales organizados para consensuar modificaciones institucionales mayores con respaldo popular.",
+                        img: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=600&q=80"
+                    }
+                ]
+            }
+        ];
+
+        function showModule(index) {
+            const data = modules[index];
+            
+            let htmlContent = `
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-[#14213D] mb-1">${data.title}</h2>
+                    <p class="text-xs sm:text-sm font-semibold text-[#9B2335] bg-[#9B2335]/5 p-3 rounded-xl mb-3 border-l-4 border-[#9B2335]">
+                        <strong>Concepto clave:</strong> ${data.concept}
+                    </p>
+                    <p class="text-xs sm:text-sm text-stone-700 bg-stone-50 p-3 rounded-xl mb-4 border border-stone-200">
+                        ${data.reflection}
+                    </p>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3">Leyes y artículos principales (Desglose interactivo):</h3>
+                    <div class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+            `;
+            
+            data.items.forEach(item => {
+                htmlContent += `
+                    <div class="bg-white p-4 rounded-xl border border-stone-200 shadow-xs flex flex-col sm:flex-row gap-4 items-center">
+                        <img src="${item.img}" alt="Referencia visual" class="w-full sm:w-24 h-24 object-cover rounded-lg shrink-0">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-[#14213D] mb-1">${item.name}</h4>
+                            <p class="text-xs text-stone-600 mb-1"><strong>Utilidad:</strong> ${item.desc}</p>
+                            <p class="text-xs text-stone-500 bg-[#F7F4EC] p-2 rounded-lg"><strong>💡 Ejemplo real:</strong> ${item.example}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            htmlContent += `</div></div>`;
+            
+            document.getElementById('content-display').innerHTML = htmlContent;
+            document.getElementById('module-source').innerHTML = `Constitución Política del Perú actual (<strong class="text-stone-700">${data.sourcePart}</strong>)`;
+            document.getElementById('module-tag').innerText = data.tag;
+
+            // Actualizar estado visual de los botones del menú lateral
+            const buttons = document.querySelectorAll('.module-btn');
+            buttons.forEach((btn, idx) => {
+                const badge = btn.querySelector('span:last-child');
+                if (idx === index) {
+                    btn.className = "module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-[#14213D] text-white flex items-center justify-between";
+                    badge.className = "text-xs bg-white/20 px-2 py-0.5 rounded text-white font-bold";
+                } else {
+                    btn.className = "module-btn text-left px-4 py-3.5 rounded-xl font-semibold transition-all shadow-sm bg-white text-[#14213D] hover:bg-stone-100 flex items-center justify-between";
+                    badge.className = "text-xs bg-stone-200 px-2 py-0.5 rounded text-stone-600 font-bold";
+                }
+            });
+        }
+
+        // Cargar el primer módulo por defecto al iniciar
+        showModule(0);
+    </script>
+</body>
+</html>
